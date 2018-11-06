@@ -1,0 +1,117 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package testpermut;
+
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Random;
+
+/**
+ *
+ * @author User
+ */
+public class DM_coffre {
+
+    public static void main(String[] args) {
+        Timer timer = new Timer("Printer");
+        MyTask t = new MyTask();
+        timer.schedule(t, 0, 1000);
+    }
+}
+
+class MyTask extends TimerTask {
+
+    int times = 0;
+
+    @Override
+    public void run() {
+        System.out.println("#######################################");
+        System.out.println("#                                     #");
+        System.out.println("#         DEVINEZ LA COMBINAISON      #");
+        System.out.println("#                                     #");
+        System.out.println("#######################################");
+
+        ////////////////////////////////GESTION TEMPS///////////////////////////
+        System.out.println("___________________________");
+        System.out.println("| Choix de la difficultÃ©: |");
+        System.out.println("|1: FACILE                |\n|2: NORMAL                |\n|3: DIFFICILE             |\n|4: PERSONNALISE          |");
+        System.out.println("|_________________________|");
+        Scanner keyd = new Scanner(System.in);
+        int a = keyd.nextInt();
+        int duree = 180;
+        if (a == 1) {
+            System.out.println("Trois minutes");
+            duree = 180;
+        }
+        if (a == 2) {
+            System.out.println("Deux minutes");
+            duree = 120;
+        }
+        if (a == 3) {
+            System.out.println("Une minute");
+            duree = 60;
+        }
+        if (a == 4) {
+            System.out.println("Choisissez la durÃ©e en secondes");
+            duree = keyd.nextInt();
+        }
+        if ((a != 1) && (a != 2) && (a != 3) && (a != 4)) {
+            System.out.println("Trois minutes");
+        }
+        ///////////////////////////BOUCLE PRINCIPALE////////////////////////////
+        while (duree > times) {
+            times++;
+            for (int x = 1; x <= 3; x++) {
+                if (times >= duree) {
+                    System.out.println("Timer stops now...");
+                }
+                System.out.println("essayez de trouver le chiffre");
+                Random rand = new Random();
+                for (int j = 0; j <= 0; j++) {
+                 
+                    int val = rand.nextInt(100);
+                    System.out.println();
+
+                    int valeur = keyd.nextInt();
+                    if (valeur != val) {
+                       
+                        if (valeur < val) {
+                           
+                            System.out.println("trop petit");
+                            valeur = keyd.nextInt();
+                        }
+                        if (valeur > val) {
+                           
+                            System.out.println("trop grand");
+                            valeur = keyd.nextInt();
+                        }
+                    }
+
+                }
+                
+                    System.out.println("vous avez trouvÃ© le chiffre numero " + x + " il vous en reste " + (3 - x));
+
+                    if (x == 3) {
+                        System.out.println("Vous avez gagnÃ©");
+                        times = duree + 5;
+                        this.cancel();
+                        int w = 0;
+                        while (w == 0) {
+
+                        }
+
+                    }
+                }
+            }
+            //////////////////////////FIN DE PARTIE (DEFAITE)///////////////////////
+            if (times >= duree) {
+                System.out.println("Timer stops now...");
+//Stop Timer.
+                this.cancel();
+            }
+        }
+}
